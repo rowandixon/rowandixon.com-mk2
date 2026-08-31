@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>About — Rowan Dixon</title>
+<meta name="description" content="About Rowan Dixon — designer, engineer, and DIY'er, building Tewke after Design Engineering at Imperial College London.">
+<link rel="stylesheet" href="css/about.css">
+</head>
+<body>
+<div class="page">
+  <nav class="topbar">
+    <a class="word" href="index.html">Rowan Dixon</a>
+    <ul class="topbar-links">
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="interests.html">Interests</a></li>
+      <li><a href="#" aria-current="true">About</a></li>
+      <li><a href="media.html">Media</a></li>
+    </ul>
+  </nav>
+
+  <header class="intro reveal">
+    <div class="eyebrow"><span class="rule"></span>Designer &middot; Engineer &middot; DIY&rsquo;er</div>
+    <h1>About</h1>
+    <p class="lede">Design Engineering from Imperial, an energy IoT company called Tewke, and a habit of building things by hand that started long before either.</p>
+  </header>
+
+  <!-- ============ FEATURED: bio + photo ============ -->
+  <section class="featured" id="about" style="--stage-glow:rgba(74,95,193,.14); --stage-glyph:#3c4fb0;">
+    <div class="featured-grid">
+      <div class="render-stage reveal has-photo">
+        <img src="images/about/rowan-portrait.jpg" alt="Rowan Dixon holding a Tewke Tap" loading="lazy">
+      </div>
+      <div class="featured-copy reveal">
+        <div class="kicker">About</div>
+        <h2>Rowan Dixon</h2>
+        <p class="tagline">Designer &middot; Engineer &middot; DIY&rsquo;er</p>
+        <p class="body">I love physical products; from clicky buttons, to the cold touch of metal, I have always been fascinated by the way designers use different shapes, textures and mechanisms to augment a user&rsquo;s experience. Since graduating in 2020 from Imperial in Design Engineering I have followed that passion to build Tewke, leading the product engineering and operations.</p>
+        <p class="body">I love working with incredible people to bring the best possible products to market, and meeting different users and businesses that all culminate to make Tewke. Not only have I had the opportunity to be creative and play with emerging technologies but also work with fantastic people across different disciplines, such as software, graphic design and mechanical engineers.</p>
+        <div class="role"><b>Away from work</b>I love to challenge myself, from running ultra-marathons to crossing the Sahara desert. I find the process of not being able to do something, and then working to achieve it incredibly rewarding.</div>
+        <div class="cta-row">
+          <a class="cta cta-secondary" href="https://www.linkedin.com/in/rowan-dixon/" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="cta" href="https://www.tewke.com" target="_blank" rel="noopener">Visit tewke.com &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="copy">&copy; 2026 by Rowan Dixon</div>
+    <div class="socials">
+      <a href="https://www.linkedin.com/in/rowan-dixon/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="#" target="_blank" rel="noopener">Thingiverse</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var els = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  if (!('IntersectionObserver' in window)){
+    els.forEach(function(e){ e.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(e){ io.observe(e); });
+})();
+
+// keep the portrait square, spanning from the top of the "Rowan Dixon" title down to
+// the bottom of the "Visit tewke.com" button -- so it never runs taller than the copy
+// beside it. Sized in JS because that span depends on the actual rendered text height
+// (font, line count, viewport width), which CSS alone can't measure.
+(function(){
+  "use strict";
+  var grid = document.querySelector('.featured-grid');
+  var stage = document.querySelector('.featured .render-stage');
+  var copy = document.querySelector('.featured-copy');
+  var h2 = copy && copy.querySelector('h2');
+  var cta = copy && copy.querySelector('.cta-row');
+  if (!grid || !stage || !copy || !h2 || !cta) return;
+
+  function sync(){
+    if (window.innerWidth <= 980){
+      grid.style.gridTemplateColumns = '';
+      stage.style.marginTop = '';
+      return;
+    }
+    var copyTop = copy.getBoundingClientRect().top;
+    var h2Top = h2.getBoundingClientRect().top;
+    var ctaBottom = cta.getBoundingClientRect().bottom;
+    var size = ctaBottom - h2Top;
+    if (size <= 0) return;
+    grid.style.gridTemplateColumns = size + 'px 1fr';
+    stage.style.marginTop = (h2Top - copyTop) + 'px';
+  }
+
+  sync();
+  // run again after layout settles (fonts/webfont swap, the new column width reflowing
+  // the copy text) so the measurement reflects the final rendered sizes, not the first pass
+  requestAnimationFrame(function(){ requestAnimationFrame(sync); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(sync);
+  window.addEventListener('load', sync);
+  window.addEventListener('resize', sync);
+})();
+</script>
+</body>
+</html>

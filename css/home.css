@@ -157,6 +157,20 @@
     letter-spacing:-.01em;
     text-wrap:balance;
   }
+  .slide-link{
+    color:inherit;
+    text-decoration:none;
+    cursor:pointer;
+    transition:color .25s ease;
+  }
+  .slide-link:hover,
+  .slide-link:focus-visible{
+    color:var(--accent);
+  }
+  .slide-link:focus-visible{
+    outline:1px solid var(--accent);
+    outline-offset:8px;
+  }
   .slide .index{
     font-family:'Jura',ui-sans-serif,system-ui,sans-serif;
     font-size:12px;

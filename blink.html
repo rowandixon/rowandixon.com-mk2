@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BLINK — Rowan Dixon</title>
+<meta name="description" content="BLINK — wireless bicycle indicators, currently under development, part of Rowan Dixon's portfolio.">
+<link rel="stylesheet" href="css/project-detail.css">
+<style>:root{--accent:#1f6fb2;--accent-soft:rgba(31,111,178,.20);}</style>
+</head>
+<body>
+<nav class="topbar">
+  <a class="word" href="index.html">Rowan Dixon</a>
+  <ul class="topbar-links">
+    <li><a href="portfolio.html" aria-current="true">Portfolio</a></li>
+    <li><a href="interests.html">Interests</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="media.html">Media</a></li>
+  </ul>
+</nav>
+
+<section class="hero-halo reveal">
+  <div class="render-stage" style="--stage-glow:rgba(31,111,178,.14); --stage-glyph:#1f6fb2;">
+    <img src="images/portfolio/blink/halo1.jpg" alt="BLINK — wireless bicycle indicators" loading="lazy" onload="phOn(this)" onerror="phErr(this)">
+    <div class="render-badge"><span class="dot"></span>Add halo1.jpg</div>
+    <div class="render-glyph">
+      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="54" cy="150" r="30" stroke="currentColor" stroke-width="2.2"/><circle cx="146" cy="150" r="30" stroke="currentColor" stroke-width="2.2"/><path d="M54 150 L94 84 L146 150 M94 84 L120 84 M94 84 L70 110" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="120" cy="84" r="7" stroke="currentColor" stroke-width="1.6" opacity=".7"/></svg>
+    </div>
+  </div>
+  <div class="hero-scrim"></div>
+  <div class="hero-title-wrap">
+    <h1>BLINK</h1>
+    <p class="hero-tagline">Wireless Bicycle Indicators</p>
+  </div>
+</section>
+
+<div class="page">
+  <div class="intro-bar reveal">
+    <div class="eyebrow"><span class="rule"></span><a href="portfolio.html">Portfolio</a><span class="crumb-sep">/</span><span class="crumb-current">BLINK</span></div>
+    <p class="lede">Wireless bicycle indicators, built to make riding after dark a little safer and a lot more visible. This project is currently under development — a case study with full renders and build details will follow once it's further along.</p>
+    <div class="facts"><b>Status</b>In development</div>
+    <div class="tags"><span class="tag-chip">Electronics</span><span class="tag-chip">Product design</span></div>
+  </div>
+
+  <nav class="related-nav reveal">
+    <p class="related-label">More from Portfolio</p>
+    <ul class="related-links">
+      <li><a href="dremel-fan.html">Dremel Fan</a></li>
+      <li><a href="s3.html">S3</a></li>
+      <li><a href="beat.html">BEAT</a></li>
+      <li><a class="all" href="portfolio.html">All portfolio &rarr;</a></li>
+    </ul>
+  </nav>
+
+  <footer>
+    <div class="copy">&copy; 2026 by Rowan Dixon</div>
+    <div class="socials">
+      <a href="https://www.linkedin.com/in/rowan-dixon/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="#" target="_blank" rel="noopener">Thingiverse</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  window.phOn = function(img){
+    var stage = img.closest('.render-stage');
+    if (stage) stage.classList.add('has-photo');
+  };
+  window.phErr = function(img){
+    var alts = ['.jpg', '.png', '.JPG', '.JPEG', '.PNG'];
+    var n = img.dataset.n ? parseInt(img.dataset.n, 10) : 0;
+    var base = img.dataset.base;
+    if (!base){
+      base = img.getAttribute('src').replace(/\.[a-zA-Z0-9]+$/, '');
+      img.dataset.base = base;
+    }
+    if (n < alts.length){
+      img.dataset.n = n + 1;
+      img.src = base + alts[n];
+    }
+  };
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  var els = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  if (!('IntersectionObserver' in window)){
+    els.forEach(function(e){ e.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(e){ io.observe(e); });
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  var overlay = document.createElement('div');
+  overlay.className = 'lightbox-overlay';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-hidden', 'true');
+
+  var closeBtn = document.createElement('button');
+  closeBtn.className = 'lightbox-close';
+  closeBtn.type = 'button';
+  closeBtn.setAttribute('aria-label', 'Close');
+  closeBtn.innerHTML = '&times;';
+
+  var img = document.createElement('img');
+  img.alt = '';
+
+  overlay.appendChild(closeBtn);
+  overlay.appendChild(img);
+  document.body.appendChild(overlay);
+
+  var lastTrigger = null;
+
+  function openLightbox(src, alt, trigger){
+    img.src = src;
+    img.alt = alt || '';
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    lastTrigger = trigger || null;
+    closeBtn.focus();
+  }
+  function closeLightbox(){
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (lastTrigger && typeof lastTrigger.focus === 'function') lastTrigger.focus();
+  }
+
+  closeBtn.addEventListener('click', closeLightbox);
+  overlay.addEventListener('click', function(e){
+    if (e.target === overlay) closeLightbox();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeLightbox();
+  });
+
+  var cardImgs = Array.prototype.slice.call(document.querySelectorAll('.render-grid-card img'));
+  cardImgs.forEach(function(im){
+    im.addEventListener('click', function(){
+      var stage = im.closest('.render-stage');
+      if (!stage || !stage.classList.contains('has-photo')) return;
+      openLightbox(im.currentSrc || im.getAttribute('src'), im.getAttribute('alt'), im);
+    });
+  });
+})();
+</script>
+</body>
+</html>

@@ -131,14 +131,23 @@
   .render-stage.has-photo::before{display:none;}
   .render-stage img,
   .render-stage video{
+    position:absolute;
+    inset:0;
     width:100%;
     height:100%;
     object-fit:cover;
     object-position:center;
     display:block;
-    transition:transform .5s ease;
+    opacity:0;
+    transition:transform .5s ease, opacity .4s ease;
+    z-index:1;
   }
+  .render-stage.has-photo img,
+  .render-stage.has-photo video{opacity:1;}
+  .render-stage.has-photo .render-badge,
+  .render-stage.has-photo .render-glyph{display:none;}
   .project-card:hover .render-stage img{transform:scale(1.035);}
+  .featured:hover .render-stage img{transform:scale(1.02);}
   .render-glyph{
     width:38%;
     max-width:220px;
@@ -228,14 +237,9 @@
   /* ---------------- also: running / climbing / skiing ---------------- */
   .prev-projects{padding:40px 0 140px;border-top:1px solid var(--ink-hair);}
   .section-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-    gap:24px;
-    flex-wrap:wrap;
     margin:56px 0 40px;
   }
-  .section-head h2{font-size:clamp(1.7rem,2.6vw,2.2rem);font-weight:400;margin:0 0 8px;}
+  .section-head h2{font-size:clamp(1.7rem,2.6vw,2.2rem);font-weight:400;margin:0 0 10px;}
   .section-head p{font-size:14px;color:var(--ink-dim);font-weight:300;margin:0;max-width:46ch;}
 
   .project-grid{
@@ -254,6 +258,12 @@
   .project-card:hover .render-stage{border-color:rgba(33,31,28,.22);box-shadow:0 2px 2px rgba(33,31,28,.04), 0 22px 40px -20px rgba(33,31,28,.28);}
   .project-card .render-glyph{width:34%;transition:opacity .35s ease;}
   .project-card:hover .render-glyph{opacity:1;}
+
+  .project-card.static{cursor:default;}
+  .project-card.static:hover{transform:none;}
+  .project-card.static:hover .render-stage{border-color:var(--ink-hair);box-shadow:none;}
+  .project-card.static:hover .render-stage img{transform:none;}
+  .project-card.static:hover .render-glyph{opacity:.72;}
   .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px;}
   .project-card h3{font-size:1.15rem;font-weight:500;margin:0;letter-spacing:-.005em;}
   .project-card .coming-soon{

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tewke Tap — Rowan Dixon</title>
+<meta name="description" content="Tewke Tap — the intelligent light switch at the centre of Tewke, part of Rowan Dixon's portfolio.">
+<link rel="stylesheet" href="css/project-detail.css">
+<style>:root{--accent:#0d9488;--accent-soft:rgba(14,179,164,.20);}</style>
+</head>
+<body>
+<nav class="topbar">
+  <a class="word" href="index.html">Rowan Dixon</a>
+  <ul class="topbar-links">
+    <li><a href="portfolio.html" aria-current="true">Portfolio</a></li>
+    <li><a href="interests.html">Interests</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="media.html">Media</a></li>
+  </ul>
+</nav>
+
+<section class="hero-halo reveal">
+  <div class="render-stage has-photo" style="--stage-glow:rgba(14,179,164,.14); --stage-glyph:#0d9488;">
+    <img src="images/portfolio/tewke-tap/halo1.jpeg" alt="Tewke Tap — the wall-mounted intelligent light switch" loading="lazy" onload="phOn(this)" onerror="phErr(this)">
+    <div class="render-badge"><span class="dot"></span>Add halo1.jpeg</div>
+    <div class="render-glyph">
+      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="52" y="16" width="96" height="168" rx="18" stroke="currentColor" stroke-width="2.2"/><rect x="66" y="36" width="68" height="118" rx="4" stroke="currentColor" stroke-width="1.6" opacity=".7"/><circle cx="100" cy="167" r="4" fill="currentColor" opacity=".7"/></svg>
+    </div>
+  </div>
+  <div class="hero-scrim"></div>
+  <div class="hero-title-wrap">
+    <h1>Tewke Tap</h1>
+    <p class="hero-tagline">Physical AI for the home</p>
+  </div>
+</section>
+
+<div class="page">
+  <div class="intro-bar reveal">
+    <div class="eyebrow"><span class="rule"></span><a href="portfolio.html">Portfolio</a><span class="crumb-sep">/</span><span class="crumb-current">Tewke Tap</span></div>
+    <p class="lede">Tewke Tap is the intelligent light switch at the centre of Tewke, the energy IoT company I helped co-found in late 2020 to develop the next generation of home automation products. By controlling all the energy in the home, and through the advanced sensors built into the devices, Tewke can save up to 30% of energy in the home.</p>
+    <div class="facts"><b>Role</b>Leading the technical team — hardware, electronics and software — plus business operations and a consistent design language across Tewke OS, the mobile app, and the hardware itself.</div>
+    <div class="awards">
+      <span class="award-chip">Red Dot Design Award, 2024</span>
+      <span class="award-chip">Clean Tech Startup of the Year, 2025</span>
+      <span class="award-chip">Young Innovator of the Year, 2024</span>
+      <span class="award-chip">B-Corp Certified, 2025</span>
+    </div>
+    <div class="press">
+      <span class="label">As featured in</span>
+      <span class="outlet">T3</span>
+      <span class="outlet">ECN</span>
+      <span class="outlet">Startups Magazine</span>
+      <span class="outlet">Imperial College London</span>
+      <span class="outlet">UKTN</span>
+    </div>
+    <a class="cta" href="https://www.tewke.com" target="_blank" rel="noopener">Visit tewke.com &rarr;</a>
+    <div class="tags"><span class="tag-chip">Product design</span><span class="tag-chip">Electronics</span><span class="tag-chip">IoT</span></div>
+  </div>
+
+  <nav class="related-nav reveal">
+    <p class="related-label">More from Portfolio</p>
+    <ul class="related-links">
+      <li><a href="beat.html">BEAT</a></li>
+      <li><a href="efd1.html">EFD.1</a></li>
+      <li><a href="s3.html">S3</a></li>
+      <li><a class="all" href="portfolio.html">All portfolio &rarr;</a></li>
+    </ul>
+  </nav>
+
+  <footer>
+    <div class="copy">&copy; 2026 by Rowan Dixon</div>
+    <div class="socials">
+      <a href="https://www.linkedin.com/in/rowan-dixon/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="#" target="_blank" rel="noopener">Thingiverse</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  window.phOn = function(img){
+    var stage = img.closest('.render-stage');
+    if (stage) stage.classList.add('has-photo');
+  };
+  window.phErr = function(img){
+    var alts = ['.jpg', '.png', '.JPG', '.JPEG', '.PNG'];
+    var n = img.dataset.n ? parseInt(img.dataset.n, 10) : 0;
+    var base = img.dataset.base;
+    if (!base){
+      base = img.getAttribute('src').replace(/\.[a-zA-Z0-9]+$/, '');
+      img.dataset.base = base;
+    }
+    if (n < alts.length){
+      img.dataset.n = n + 1;
+      img.src = base + alts[n];
+    }
+  };
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  var els = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  if (!('IntersectionObserver' in window)){
+    els.forEach(function(e){ e.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(e){ io.observe(e); });
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  var overlay = document.createElement('div');
+  overlay.className = 'lightbox-overlay';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-hidden', 'true');
+
+  var closeBtn = document.createElement('button');
+  closeBtn.className = 'lightbox-close';
+  closeBtn.type = 'button';
+  closeBtn.setAttribute('aria-label', 'Close');
+  closeBtn.innerHTML = '&times;';
+
+  var img = document.createElement('img');
+  img.alt = '';
+
+  overlay.appendChild(closeBtn);
+  overlay.appendChild(img);
+  document.body.appendChild(overlay);
+
+  var lastTrigger = null;
+
+  function openLightbox(src, alt, trigger){
+    img.src = src;
+    img.alt = alt || '';
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    lastTrigger = trigger || null;
+    closeBtn.focus();
+  }
+  function closeLightbox(){
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (lastTrigger && typeof lastTrigger.focus === 'function') lastTrigger.focus();
+  }
+
+  closeBtn.addEventListener('click', closeLightbox);
+  overlay.addEventListener('click', function(e){
+    if (e.target === overlay) closeLightbox();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeLightbox();
+  });
+
+  var cardImgs = Array.prototype.slice.call(document.querySelectorAll('.render-grid-card img'));
+  cardImgs.forEach(function(im){
+    im.addEventListener('click', function(){
+      var stage = im.closest('.render-stage');
+      if (!stage || !stage.classList.contains('has-photo')) return;
+      openLightbox(im.currentSrc || im.getAttribute('src'), im.getAttribute('alt'), im);
+    });
+  });
+})();
+</script>
+</body>
+</html>

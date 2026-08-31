@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dremel Fan — Rowan Dixon</title>
+<meta name="description" content="Dremel Fan — a Dremel 3000 turned into a 3D-printed desk fan in one evening, part of Rowan Dixon's portfolio.">
+<link rel="stylesheet" href="css/project-detail.css">
+<style>:root{--accent:#2f8f3a;--accent-soft:rgba(47,143,58,.20);}</style>
+</head>
+<body>
+<nav class="topbar">
+  <a class="word" href="index.html">Rowan Dixon</a>
+  <ul class="topbar-links">
+    <li><a href="portfolio.html" aria-current="true">Portfolio</a></li>
+    <li><a href="interests.html">Interests</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="media.html">Media</a></li>
+  </ul>
+</nav>
+
+<section class="hero-halo reveal">
+  <div class="render-stage has-photo" style="--stage-glow:rgba(47,143,58,.14); --stage-glyph:#2f8f3a;">
+    <img src="images/portfolio/dremel-fan/halo1.jpg" alt="A Dremel 3000 rotary tool converted into a 3D-printed desk fan" loading="lazy" onload="phOn(this)" onerror="phErr(this)">
+    <div class="render-badge"><span class="dot"></span>Add halo1.jpg</div>
+    <div class="render-glyph">
+      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="100" cy="100" r="60" stroke="currentColor" stroke-width="2.2"/><circle cx="100" cy="100" r="34" stroke="currentColor" stroke-width="1.6" opacity=".7"/><line x1="100" y1="40" x2="100" y2="16" stroke="currentColor" stroke-width="1.6" opacity=".5"/><line x1="100" y1="160" x2="100" y2="184" stroke="currentColor" stroke-width="1.6" opacity=".5"/><line x1="40" y1="100" x2="16" y2="100" stroke="currentColor" stroke-width="1.6" opacity=".5"/><line x1="160" y1="100" x2="184" y2="100" stroke="currentColor" stroke-width="1.6" opacity=".5"/></svg>
+    </div>
+  </div>
+  <div class="hero-scrim"></div>
+  <div class="hero-title-wrap">
+    <h1>Dremel Fan</h1>
+    <p class="hero-tagline">3D Printed Desk Fan</p>
+  </div>
+</section>
+
+<div class="page">
+  <div class="intro-bar reveal">
+    <div class="eyebrow"><span class="rule"></span><a href="portfolio.html">Portfolio</a><span class="crumb-sep">/</span><span class="crumb-current">Dremel Fan</span></div>
+    <p class="lede">Designed in an evening to turn a Dremel 3000 into a desk fan using simple, robust 3D-printed parts. Built during a London heatwave in late June 2020 — I chose to design and build over buying, due to missing next-day delivery, environmental concerns about manufacturing and waste, and budget constraints as a recent graduate. Designed in Fusion 360, with parts engineered to print without any support structures; the rotor blades have a complex top curve and a 40° rear overhang, compatible with a Prusa MK3S. The clamp mechanism uses M3 bolts and brass M3 inserts melted into the plastic to secure the Dremel tool.</p>
+    <div class="facts"><b>Personal, solo project</b>Late June 2020 · Designed in Fusion 360</div>
+    <div class="tags"><span class="tag-chip">3D printing</span><span class="tag-chip">Rapid design</span><span class="tag-chip">Prototyping</span></div>
+  </div>
+
+  <section class="render-grid">
+    <p class="render-grid-label">Renders &amp; photos</p>
+    <div class="render-grid-cards count-1">
+      <figure class="render-grid-card reveal">
+        <div class="render-stage has-photo" style="--stage-glow:rgba(47,143,58,.13); --stage-glyph:#2f8f3a;">
+          <img src="images/portfolio/dremel-fan/halo2.jpg" alt="Dremel Fan — close-up of the 3D-printed rotor and clamp" loading="lazy" onload="phOn(this)" onerror="phErr(this)">
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <nav class="related-nav reveal">
+    <p class="related-label">More from Portfolio</p>
+    <ul class="related-links">
+      <li><a href="s3.html">S3</a></li>
+      <li><a href="roupell-l1.html">Roupell L1</a></li>
+      <li><a href="efd1.html">EFD.1</a></li>
+      <li><a class="all" href="portfolio.html">All portfolio &rarr;</a></li>
+    </ul>
+  </nav>
+
+  <footer>
+    <div class="copy">&copy; 2026 by Rowan Dixon</div>
+    <div class="socials">
+      <a href="https://www.linkedin.com/in/rowan-dixon/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="#" target="_blank" rel="noopener">Thingiverse</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  window.phOn = function(img){
+    var stage = img.closest('.render-stage');
+    if (stage) stage.classList.add('has-photo');
+  };
+  window.phErr = function(img){
+    var alts = ['.jpg', '.png', '.JPG', '.JPEG', '.PNG'];
+    var n = img.dataset.n ? parseInt(img.dataset.n, 10) : 0;
+    var base = img.dataset.base;
+    if (!base){
+      base = img.getAttribute('src').replace(/\.[a-zA-Z0-9]+$/, '');
+      img.dataset.base = base;
+    }
+    if (n < alts.length){
+      img.dataset.n = n + 1;
+      img.src = base + alts[n];
+    }
+  };
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  var els = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  if (!('IntersectionObserver' in window)){
+    els.forEach(function(e){ e.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(e){ io.observe(e); });
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  var overlay = document.createElement('div');
+  overlay.className = 'lightbox-overlay';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-hidden', 'true');
+
+  var closeBtn = document.createElement('button');
+  closeBtn.className = 'lightbox-close';
+  closeBtn.type = 'button';
+  closeBtn.setAttribute('aria-label', 'Close');
+  closeBtn.innerHTML = '&times;';
+
+  var img = document.createElement('img');
+  img.alt = '';
+
+  overlay.appendChild(closeBtn);
+  overlay.appendChild(img);
+  document.body.appendChild(overlay);
+
+  var lastTrigger = null;
+
+  function openLightbox(src, alt, trigger){
+    img.src = src;
+    img.alt = alt || '';
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    lastTrigger = trigger || null;
+    closeBtn.focus();
+  }
+  function closeLightbox(){
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (lastTrigger && typeof lastTrigger.focus === 'function') lastTrigger.focus();
+  }
+
+  closeBtn.addEventListener('click', closeLightbox);
+  overlay.addEventListener('click', function(e){
+    if (e.target === overlay) closeLightbox();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeLightbox();
+  });
+
+  var cardImgs = Array.prototype.slice.call(document.querySelectorAll('.render-grid-card img'));
+  cardImgs.forEach(function(im){
+    im.addEventListener('click', function(){
+      var stage = im.closest('.render-stage');
+      if (!stage || !stage.classList.contains('has-photo')) return;
+      openLightbox(im.currentSrc || im.getAttribute('src'), im.getAttribute('alt'), im);
+    });
+  });
+})();
+</script>
+</body>
+</html>

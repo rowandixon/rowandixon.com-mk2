@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>S3 — Rowan Dixon</title>
+<meta name="description" content="S3 — a machined aluminium modular home speaker system, part of Rowan Dixon's portfolio.">
+<link rel="stylesheet" href="css/project-detail.css">
+<style>:root{--accent:#4f6577;--accent-soft:rgba(79,101,119,.20);}</style>
+</head>
+<body>
+<nav class="topbar">
+  <a class="word" href="index.html">Rowan Dixon</a>
+  <ul class="topbar-links">
+    <li><a href="portfolio.html" aria-current="true">Portfolio</a></li>
+    <li><a href="interests.html">Interests</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="media.html">Media</a></li>
+  </ul>
+</nav>
+
+<section class="hero-halo reveal">
+  <div class="render-stage has-photo" style="--stage-glow:rgba(79,101,119,.14); --stage-glyph:#4f6577;">
+    <img src="images/portfolio/s3/halo1.png" alt="S3 — a machined aluminium modular home speaker, front view" loading="lazy" onload="phOn(this)" onerror="phErr(this)">
+    <div class="render-badge"><span class="dot"></span>Add halo1.png</div>
+    <div class="render-glyph">
+      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="40" y="20" width="120" height="160" rx="14" stroke="currentColor" stroke-width="2.2"/><circle cx="100" cy="72" r="30" stroke="currentColor" stroke-width="1.6" opacity=".7"/><circle cx="100" cy="140" r="16" stroke="currentColor" stroke-width="1.6" opacity=".7"/></svg>
+    </div>
+  </div>
+  <div class="hero-scrim"></div>
+  <div class="hero-title-wrap">
+    <h1>S3</h1>
+    <p class="hero-tagline">Mesh Home Speaker System</p>
+  </div>
+</section>
+
+<div class="page">
+  <div class="intro-bar reveal">
+    <div class="eyebrow"><span class="rule"></span><a href="portfolio.html">Portfolio</a><span class="crumb-sep">/</span><span class="crumb-current">S3</span></div>
+    <p class="lede">S3 is a home speaker system for people who want a minimalist, premium home audio experience. Rather than relying on wireless communication, the system uses the home's internal power cabling to minimise cost and latency. Each module is machined from a billet of aluminium with precision-drilled holes that let audio pass from the internal 40mm drivers — the S+ module adds a 20mm tweeter. Room assignment is set via a pair button and app; other features include a tempered glass face plate, a glowing status indicator, machined ventilation slots, and a modular design for easy maintenance and recyclability.</p>
+    <div class="facts"><b>Personal project</b>Modular hardware, powerline audio, companion app for room assignment</div>
+    <div class="tags"><span class="tag-chip">Industrial design</span><span class="tag-chip">Systems</span><span class="tag-chip">UX</span></div>
+  </div>
+
+  <section class="render-grid">
+    <p class="render-grid-label">Renders &amp; photos</p>
+    <div class="render-grid-cards">
+      <figure class="render-grid-card reveal">
+        <div class="render-stage has-photo" style="--stage-glow:rgba(79,101,119,.13); --stage-glyph:#4f6577;">
+          <img src="images/portfolio/s3/halo2.png" alt="S3 — glowing blue status indicator detail" loading="lazy" onload="phOn(this)" onerror="phErr(this)">
+        </div>
+      </figure>
+      <figure class="render-grid-card reveal">
+        <div class="render-stage has-photo" style="--stage-glow:rgba(79,101,119,.13); --stage-glyph:#4f6577;">
+          <img src="images/portfolio/s3/halo3.png" alt="S+ module — underside detail" loading="lazy" onload="phOn(this)" onerror="phErr(this)">
+        </div>
+      </figure>
+      <figure class="render-grid-card reveal">
+        <div class="render-stage has-photo" style="--stage-glow:rgba(79,101,119,.13); --stage-glyph:#4f6577;">
+          <img src="images/portfolio/s3/halo4.png" alt="S3 module — underside detail" loading="lazy" onload="phOn(this)" onerror="phErr(this)">
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <nav class="related-nav reveal">
+    <p class="related-label">More from Portfolio</p>
+    <ul class="related-links">
+      <li><a href="roupell-l1.html">Roupell L1</a></li>
+      <li><a href="dremel-fan.html">Dremel Fan</a></li>
+      <li><a href="tewke-tap.html">Tewke Tap</a></li>
+      <li><a class="all" href="portfolio.html">All portfolio &rarr;</a></li>
+    </ul>
+  </nav>
+
+  <footer>
+    <div class="copy">&copy; 2026 by Rowan Dixon</div>
+    <div class="socials">
+      <a href="https://www.linkedin.com/in/rowan-dixon/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="#" target="_blank" rel="noopener">Thingiverse</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  window.phOn = function(img){
+    var stage = img.closest('.render-stage');
+    if (stage) stage.classList.add('has-photo');
+  };
+  window.phErr = function(img){
+    var alts = ['.jpg', '.png', '.JPG', '.JPEG', '.PNG'];
+    var n = img.dataset.n ? parseInt(img.dataset.n, 10) : 0;
+    var base = img.dataset.base;
+    if (!base){
+      base = img.getAttribute('src').replace(/\.[a-zA-Z0-9]+$/, '');
+      img.dataset.base = base;
+    }
+    if (n < alts.length){
+      img.dataset.n = n + 1;
+      img.src = base + alts[n];
+    }
+  };
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  var els = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  if (!('IntersectionObserver' in window)){
+    els.forEach(function(e){ e.classList.add('in'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting){
+        entry.target.classList.add('in');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(e){ io.observe(e); });
+})();
+</script>
+<script>
+(function(){
+  "use strict";
+  var overlay = document.createElement('div');
+  overlay.className = 'lightbox-overlay';
+  overlay.setAttribute('role', 'dialog');
+  overlay.setAttribute('aria-modal', 'true');
+  overlay.setAttribute('aria-hidden', 'true');
+
+  var closeBtn = document.createElement('button');
+  closeBtn.className = 'lightbox-close';
+  closeBtn.type = 'button';
+  closeBtn.setAttribute('aria-label', 'Close');
+  closeBtn.innerHTML = '&times;';
+
+  var img = document.createElement('img');
+  img.alt = '';
+
+  overlay.appendChild(closeBtn);
+  overlay.appendChild(img);
+  document.body.appendChild(overlay);
+
+  var lastTrigger = null;
+
+  function openLightbox(src, alt, trigger){
+    img.src = src;
+    img.alt = alt || '';
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    lastTrigger = trigger || null;
+    closeBtn.focus();
+  }
+  function closeLightbox(){
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (lastTrigger && typeof lastTrigger.focus === 'function') lastTrigger.focus();
+  }
+
+  closeBtn.addEventListener('click', closeLightbox);
+  overlay.addEventListener('click', function(e){
+    if (e.target === overlay) closeLightbox();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeLightbox();
+  });
+
+  var cardImgs = Array.prototype.slice.call(document.querySelectorAll('.render-grid-card img'));
+  cardImgs.forEach(function(im){
+    im.addEventListener('click', function(){
+      var stage = im.closest('.render-stage');
+      if (!stage || !stage.classList.contains('has-photo')) return;
+      openLightbox(im.currentSrc || im.getAttribute('src'), im.getAttribute('alt'), im);
+    });
+  });
+})();
+</script>
+</body>
+</html>

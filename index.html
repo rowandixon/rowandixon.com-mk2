@@ -13,8 +13,8 @@
   <ul class="topbar-links">
     <li><a href="portfolio.html" data-i="1">Portfolio</a></li>
     <li><a href="interests.html" data-i="2">Interests</a></li>
-    <li><a href="#" data-i="3">About</a></li>
-    <li><a href="#" data-i="4">Media</a></li>
+    <li><a href="about.html" data-i="3">About</a></li>
+    <li><a href="media.html" data-i="4">Media</a></li>
   </ul>
 </div>
 
@@ -37,22 +37,22 @@
       </div>
       <div class="slide" data-i="1">
         <div class="index">02 / 05</div>
-        <h1>Portfolio</h1>
+        <h1><a class="slide-link" href="portfolio.html">Portfolio</a></h1>
         <p>Tewke, BEAT, and a decade of things built by hand.</p>
       </div>
       <div class="slide" data-i="2">
         <div class="index">03 / 05</div>
-        <h1>Interests</h1>
+        <h1><a class="slide-link" href="interests.html">Interests</a></h1>
         <p>Climbing, mountaineering, running, skiing, flying.</p>
       </div>
       <div class="slide" data-i="3">
         <div class="index">04 / 05</div>
-        <h1>About</h1>
+        <h1><a class="slide-link" href="about.html">About</a></h1>
         <p>Design Engineering, Imperial &rsquo;20 &mdash; now building Tewke.</p>
       </div>
       <div class="slide" data-i="4">
         <div class="index">05 / 05</div>
-        <h1>Media</h1>
+        <h1><a class="slide-link" href="media.html">Media</a></h1>
         <p>Field notes from the workbench, mostly unfiled.</p>
       </div>
     </div>
@@ -180,6 +180,8 @@
         a.setAttribute('aria-current', (+a.dataset.i === displaySection) ? 'true' : 'false');
       });
       roForm.textContent = LABELS[ORDER[displaySection]];
+      setAccent(displaySection);
+      canvas.style.cursor = DOT_PAGES[displaySection] ? 'pointer' : 'crosshair';
     }
     roScroll.textContent = (progress / LAST * 100).toFixed(1) + '%';
   }
@@ -193,17 +195,21 @@
     else scrollHint.style.opacity = '1';
   }, {passive:true});
 
+  var DOT_PAGES = {1:'portfolio.html', 2:'interests.html', 3:'about.html', 4:'media.html'}; // sections with a real page to jump to
   dots.forEach(function(d){
     d.addEventListener('click', function(){
       var i = +d.dataset.i;
+      if (DOT_PAGES[i] && displaySection === i){
+        window.location.href = DOT_PAGES[i]; // already viewing this section -- open its page
+        return;
+      }
       var max = document.documentElement.scrollHeight - window.innerHeight;
       window.scrollTo({top: max * (i / LAST), behavior:'smooth'});
     });
   });
 
   // top nav bar -- Portfolio and Interests now have their own dedicated pages, so those
-  // links navigate there for real. About and Media don't have dedicated pages yet, so
-  // those two still just scroll to the matching section of this same scrolling mesh.
+  // links navigate there for real -- all five sections now have a dedicated page.
   navLinks.forEach(function(a){
     if (a.getAttribute('href') !== '#') return; // real link -- let it navigate normally
     a.addEventListener('click', function(e){
@@ -238,6 +244,23 @@
     face:    [255, 255, 255], // brighter white, no tint
     paper:   [154, 35, 240]   // #9A23F0
   };
+
+  // tint the dot-rail / slide-link accent (--accent, --accent-soft) to match whichever
+  // section's particle hover color is currently showing, instead of a single fixed color.
+  function setAccent(i){
+    var c = HOVER_COLORS[ORDER[i]] || HOVER_COLORS.tap;
+    var rgb = c[0] + ',' + c[1] + ',' + c[2];
+    document.documentElement.style.setProperty('--accent', 'rgb(' + rgb + ')');
+    document.documentElement.style.setProperty('--accent-soft', 'rgba(' + rgb + ',.28)');
+  }
+  setAccent(displaySection); // set the correct color for the section shown on load
+
+  // clicking the particle field opens the current section's page -- same rule as the
+  // dot-rail: only sections with a real page (Portfolio, Interests) do anything.
+  canvas.style.cursor = DOT_PAGES[displaySection] ? 'pointer' : 'crosshair';
+  canvas.addEventListener('click', function(){
+    if (DOT_PAGES[displaySection]) window.location.href = DOT_PAGES[displaySection];
+  });
 
   // ---------------- draw helpers ----------------
   // "contain" fit: returns the placement rect for a shape's native frame inside a w×h box
