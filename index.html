@@ -11,10 +11,10 @@
 <div class="topbar">
   <div class="word">Rowan Dixon</div>
   <ul class="topbar-links">
-    <li><a href="portfolio.html" data-i="1">Portfolio</a></li>
-    <li><a href="interests.html" data-i="2">Interests</a></li>
-    <li><a href="about.html" data-i="3">About</a></li>
-    <li><a href="media.html" data-i="4">Media</a></li>
+    <li><a href="portfolio" data-i="1">Portfolio</a></li>
+    <li><a href="interests" data-i="2">Interests</a></li>
+    <li><a href="about" data-i="3">About</a></li>
+    <li><a href="media" data-i="4">Media</a></li>
   </ul>
 </div>
 
@@ -37,22 +37,22 @@
       </div>
       <div class="slide" data-i="1">
         <div class="index">02 / 05</div>
-        <h1><a class="slide-link" href="portfolio.html">Portfolio</a></h1>
+        <h1><a class="slide-link" href="portfolio">Portfolio</a></h1>
         <p>Tewke, BEAT, and a decade of things built by hand.</p>
       </div>
       <div class="slide" data-i="2">
         <div class="index">03 / 05</div>
-        <h1><a class="slide-link" href="interests.html">Interests</a></h1>
+        <h1><a class="slide-link" href="interests">Interests</a></h1>
         <p>Climbing, mountaineering, running, skiing, flying.</p>
       </div>
       <div class="slide" data-i="3">
         <div class="index">04 / 05</div>
-        <h1><a class="slide-link" href="about.html">About</a></h1>
+        <h1><a class="slide-link" href="about">About</a></h1>
         <p>Design Engineering, Imperial &rsquo;20 &mdash; now building Tewke.</p>
       </div>
       <div class="slide" data-i="4">
         <div class="index">05 / 05</div>
-        <h1><a class="slide-link" href="media.html">Media</a></h1>
+        <h1><a class="slide-link" href="media">Media</a></h1>
         <p>Field notes from the workbench, mostly unfiled.</p>
       </div>
     </div>
@@ -194,7 +194,7 @@
     else scrollHint.style.opacity = '1';
   }, {passive:true});
 
-  var DOT_PAGES = {1:'portfolio.html', 2:'interests.html', 3:'about.html', 4:'media.html'}; // sections with a real page to jump to
+  var DOT_PAGES = {1:'portfolio', 2:'interests', 3:'about', 4:'media'}; // sections with a real page to jump to
   dots.forEach(function(d){
     d.addEventListener('click', function(){
       var i = +d.dataset.i;
