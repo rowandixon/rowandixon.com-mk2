@@ -9,15 +9,8 @@
 </head>
 <body>
 <div class="page">
-  <nav class="topbar">
-    <a class="word" href="/">Rowan Dixon</a>
-    <ul class="topbar-links">
-      <li><a href="portfolio">Portfolio</a></li>
-      <li><a href="interests">Interests</a></li>
-      <li><a href="about">About</a></li>
-      <li><a href="#" aria-current="true">Media</a></li>
-    </ul>
-  </nav>
+  <nav class="topbar" id="site-nav"></nav>
+  <script src="js/nav.js"></script>
 
   <header class="intro reveal">
     <div class="eyebrow"><span class="rule"></span>In the press</div>
@@ -28,6 +21,26 @@
   <figure class="media-halo reveal">
     <img src="images/media/media-halo.jpg" alt="Rowan Dixon in the press" loading="lazy">
   </figure>
+
+  <section class="press-section">
+    <div class="section-head reveal">
+      <h2>Articles/White Papers</h2>
+      <p>Original essays on where I think physical-world AI is headed.</p>
+    </div>
+    <div class="press-list">
+      <a class="press-item reveal" href="sfm">
+        <span class="press-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2.5h8l4 4V21a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1Z"></path>
+            <path d="M14 2.5V7h4"></path>
+            <path d="M8 12h8M8 15.5h8M8 9h3"></path>
+          </svg>
+        </span>
+        <span class="press-text"><span class="press-outlet">Sensor Foundational Models (SFMs): The Missing Layer Between AI and the Physical World</span><span class="press-desc">White paper</span></span>
+        <span class="press-date">2026</span>
+      </a>
+    </div>
+  </section>
 
   <section class="press-section">
     <div class="section-head reveal">

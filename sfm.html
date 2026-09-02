@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sensor Foundational Models (SFMs) — Rowan Dixon</title>
+<meta name="description" content="Sensor Foundational Models (SFMs): The Missing Layer Between AI and the Physical World. An essay by Rowan Dixon.">
+<link rel="stylesheet" href="css/article.css">
+<script>
+  // Apply saved reading theme before paint, so there's no flash of the wrong theme.
+  (function(){
+    try {
+      var saved = localStorage.getItem('sfm-theme');
+      if (saved === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body>
+<div class="page">
+  <nav class="topbar" id="site-nav"></nav>
+  <script src="js/nav.js"></script>
+
+  <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark reading mode" aria-pressed="false">
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"></circle><path d="M12 2.5v3M12 18.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2.5 12h3M18.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"></path></svg>
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.2 14.6A8.6 8.6 0 0 1 9.4 3.8a8.6 8.6 0 1 0 10.8 10.8Z"></path></svg>
+  </button>
+
+  <div class="article-shell">
+    <a class="back-link" href="media">&larr; Media</a>
+
+    <article class="article">
+      <header class="article-header">
+        <div class="article-kicker">Articles / White Papers</div>
+        <h1>Sensor Foundational Models (SFMs)</h1>
+        <p class="article-subtitle">The Missing Layer Between AI and the Physical World</p>
+        <p class="article-tagline">Why the next leap in AI isn't smarter chatbots, it's products that can sense, think, and act in the real world.</p>
+        <p class="article-byline">Rowan Dixon</p>
+      </header>
+
+      <div class="article-body">
+        <p>The last five years of AI progress have been a story about digital data, text, code, and images, processed in datacentres with huge amounts of computational power, where latency has rarely been the binding constraint. But for real-world applications in physical space, data doesn't arrive as clean paragraphs or well-lit photos. It arrives as a flood of asynchronous, noisy, physically grounded signals: an accelerometer sampling at 400Hz next to a temperature sensor updating every 3 seconds, with camera feeds arriving at 30–120Hz. This is the reality of the physical world, and today's foundation models were not built for it.</p>
+      <p>This article defines <strong>Sensor Foundational Models (SFMs)</strong>: a distinct class of foundation model built to reason and act, in real time, over asynchronous and heterogeneous sensor streams, under the power and compute constraints of edge hardware.</p>
+      <p>I want to start with what SFMs are not. They are not a scaled-down version of a language model, shrunk to run on low-compute hardware.</p>
+      <p>Instead, SFMs solve a different problem: fusing signals that disagree on timing and modality, producing decisions in real time (tens of milliseconds), and doing it, ideally, on hardware that's battery powered rather than tethered to the grid or a diesel generator. I believe that SFMs are a layer the current AI stack is missing for bringing AI into the real, physical world, why the underlying technology is finally ready, and where I think the category gets built and won. From the home, to drones, to the factory floor, to space.</p>
+        <h2>The Physical World Is AI's Next Frontier</h2>
+      <p>Every major foundation model to date has been trained on a <em>record</em> of the world, not the world itself. Text is a compressed record of human thought. Images are a static record of a scene. Even video, the most "physical" of the standard modalities, is a dense, synchronous, evenly sampled record. It's a format chosen because cameras happen to produce it, not because it's how the physical world presents itself to a machine. (As it happens, video is a key component of some SFMs.)</p>
+      <p>Sensors, combined together, don't work that way. A modern embedded system such as a drone contains multiple sensors that each sample a different physical quantity, at a different rate, with a different noise profile, and that go silent or lag unpredictably depending on power state, radio contention, or physical occlusion. An IMU might produce a reading every 2 milliseconds. A CO2 sensor might produce one every 3 seconds. None of this looks like a token stream, and none of it waits politely for the others before the system has to make a decision.</p>
+      <p>This asynchronous, heterogeneous, real-time character is precisely what today's foundation models aren't designed to handle. Mainstream LLMs and vision transformers typically assume tokenized, ordered, or frame-based inputs, though transformer variants are increasingly being proposed for irregular multimodal fusion. Both assume you can afford to wait for the whole input before responding, and both assume you have a GPU cluster, not a lithium-ion battery, to do the responding with. The result is a large and growing gap: the physical world generates more raw signal every second than the digital world ever will, and almost none of the current foundation model stack is built to live inside it.</p>
+      <p>That gap is what SFMs are for.</p>
+      <p>I believe we're limiting our devices' ability to "reason" by not giving them enough "senses." Take a drone as an example. The main way to control one today is via input from a human monitoring a video feed. I don't think that's how it should be flying. A drone should have an instructed mission, and should fuse sensor data together, from an IMU, multiple video streams, pressure sensors, accelerometers, and more. That's what we do as humans, with eyes, ears, nose, and sensation on our skin, albeit with analogue data.</p>
+      <h2>Defining SFM</h2>
+      <blockquote>
+      <p><strong>Sensor Foundational Model (SFM):</strong> a foundation model trained to perform real-time reasoning and actioning over asynchronous, heterogeneous sensor data streams, under the power, memory, and latency constraints of edge hardware.</p>
+      </blockquote>
+      <p>Four words and phrases are doing the real work in that definition, because each one rules out a common but insufficient alternative.</p>
+      <p><strong>Real-time.</strong> Not "fast inference" in the sense of a low-latency cloud API call. Real-time means the model's operating budget is set by the physical process it's embedded in. For example, a drone's control loop, a factory safety interlock, a fall-detection algorithm. Not by what feels responsive to a person waiting for a chat reply. Missing the required action isn't a bad user experience; it's a failed action. For feasibility's sake, I'd define real-time as anything under 500ms, with a target of sub-100ms.</p>
+      <p><strong>Reasoning <em>and</em> actioning.</strong> Most sensor machine learning to date stops at classification or forecasting: is this a fall, will this machine fail in the next week, what will tomorrow's energy price be. A SFM has to close the loop. It must turn an inference into a decision and then an action, under uncertainty and incomplete information, because in the physical world you rarely get to wait for more data before you have to act.</p>
+      <p><strong>Asynchronous, heterogeneous streams.</strong> Sensor data comes in different modalities at different sampling rates. SFMs are designed to take that in and process it in real time. This is what I think will help bring AI out of the computer screen and into the real world.</p>
+      <p><strong>Edge hardware constraints.</strong> Power, memory, and thermal budgets aren't a deployment afterthought to be solved by quantizing a cloud model after the fact. They're a first-class design constraint. A model that reasons brilliantly but needs a server rack to do so hasn't solved what SFMs are meant to solve.</p>
+      <p>Put together, these four properties describe a genuinely different design space from the one that produced GPT, Gemini, or Claude. This isn’t a harder version of the same problem, but a different problem that happens to share the "train a large general-purpose model, then adapt it to many tasks" recipe that made foundation models work in the first place. That shared recipe is why the term <em>foundation model</em> still applies, and why I think it's worth keeping SFMs in the same conceptual family rather than treating them as a niche subfield of embedded ML.</p>
+      <h2>Why General-Purpose Models Don't Just Transfer Down</h2>
+      <p>I want to anticipate a reasonable objection: hasn't this already been solved by distilling large models onto power and compute-constrained hardware? I don’t believe so. There are two structural reasons no amount of distillation can fix, because they're about the shape of the problem, not the size of the model.</p>
+      <p>The existing landscape makes this concrete rather than hypothetical. Time-series foundation models such as Chronos, MOIRAI, and Lag-Llama are genuinely capable at forecasting, but forecasting a relatively clean, single-modality numerical stream is a narrower and easier problem than fusing irregular, multimodal, partially-missing sensor data into a real-time decision. Large multimodal models remain optimised for structured vision-language pairs, not open-ended sensor fusion. Many TinyML deployments remain task-specific and require substantial per-device or per-environment tuning. A recent academic study benchmarking time-series foundation models on real building-sensor data found that generalisation across different buildings and deployment conditions remained incomplete, and that naively combining multiple sensor modalities could hurt performance rather than help it. This is a direct illustration of the fusion problem I'm describing here.<sup class="ref"><a href="#ref1">1</a></sup> No existing approach yet handles cross-context generalisation from irregular, asynchronous, multimodal sensor data under real edge power constraints, in a single architecture. That's the gap I am naming with SFMs, not inventing.<sup class="ref"><a href="#ref2">2</a></sup></p>
+      <p><strong>Synchrony is assumed, not optional.</strong> Transformer architectures, and the tokenisation schemes built on top of them, generally assume a well-ordered sequence. Real sensor fusion requires reasoning over streams that are out of sync with each other. That asynchrony carries information, and it gets thrown away the moment you force everything onto a shared clock.</p>
+      <p><strong>The failure mode is physical, not linguistic.</strong> A hallucinating chatbot produces a wrong sentence. A hallucinating SFM controlling a drone or a medical wearable produces a wrong <em>action</em> in the physical world, often with no chance to catch the error before it has consequences. That raises the bar for calibrated uncertainty, graceful degradation when a sensor drops out, and verifiable safety envelopes. None of these are solved problems for today's general-purpose foundation models, which were built for a domain where a wrong answer is embarrassing rather than dangerous (I will note that there are AI models being used in life/death situations by the military, but it is my understanding that humans are still, as of writing, very much kept in the loop).</p>
+      <p>None of this means today's foundation model research is irrelevant to SFMs. Self-supervised pretraining, transfer learning, and scaling laws are all foundational ideas SFMs inherit. It means the <em>architecture, training objective, and deployment target</em> have to be rebuilt around the physical world's constraints, rather than inherited wholesale from the text and vision stack.</p>
+      <h2>I believe there should be Four Pillars of a SFM</h2>
+      <p>As of writing, I believe any credible SFM architecture has to make deliberate choices in four areas that general-purpose foundation models get to take for granted.</p>
+      <p><strong>Multimodal native.</strong> This is what will make SFMs the gold standard in the physical world. Multimodal functionality lets an SFM take in multiple sources of input, analyse and understand them, and then act on what it's observed. Without multimodal functionality, SFMs would fit into existing classes of unimodal models, like Chronos or MOIRAI.</p>
+      <p><strong>Asynchronous data fusion.</strong> Having multimodal sensors inherently means the data is asynchronous. These streams need to work harmoniously together, and asynchronous data fusion is core to making that happen. The sampling rate of a radar at 10MHz, a camera at 30Hz, and an IMU at 32kHz all need to work together in harmony, even if one drops out. Part of this pillar is building in redundancy, so the SFM doesn't catastrophically fail if there's a lapse in one of the modalities of data.</p>
+      <p><strong>Real-time analysis and action.</strong> At their core, SFMs should be designed to have as close to real-time analysis as possible, which can then be acted on. This works in conjunction with the pillar above: the action produces a real-world impact, and the sensor data feeds back into the model, either reinforcing the action or correcting it, helping the SFM adjust in real time.</p>
+      <p><strong>Local first.</strong> To be truly useful, SFMs need to run locally. In the short term, high-speed data links will still be necessary while low-powered hardware races to keep up and the models get optimised, but the north star is locally run SFMs making fully autonomous decisions. This is imperative for the future of some industries, especially defence, where the RF spectrum will be compromised and communication can't be guaranteed. Practically, that means the hardware should be battery operable and of reasonable compute. I would suggest sub 12GB RAM and sub 10W sustained power draw. This of course has nuance to it. There will be deployments that require more computation, and thus require more demanding hardware capabilities. In these scenarios, power might not be such a limiting factor, for example larger UAV’s operated by a military.</p>
+      <p>In short, a credible SFM implementation should be designed and tested against explicit, falsifiable targets: sub-500ms response latency, single-digit-watt sustained power draw, a memory footprint found in consumer electronics (sub 12GB), quantization on commodity edge silicon, and performance that holds up close to its full-data baseline even when a sensor input drops out or arrives late. These are the kind of numbers an idea SFM program should be able to report against under deployment conditions.</p>
+      <p>Any team building toward SFMs should be able to point to a concrete answer for each of these four core pillars. A generic transformer with a smaller parameter count and a re-sampled input pipeline is not an SFM, whatever the marketing may say in the future.</p>
+      <h2>One Paradigm, Many Deployments</h2>
+      <p>SFMs deserve to be named as their own category because the underlying technical problem repeats, almost unchanged, across multiple domains that share nothing in terms of go-to-market or regulatory environment.</p>
+      <p><strong>Autonomous vehicles and drones.</strong> This is something I have already covered, and there is a good reason for it. I think it shows the clearest initial commercial path for SFM’s in the short term. These industries have the best use I can see for multi-sensor fusion (IMU, GPS, vision, LIDAR, barometric) under strict real-time control loops. They also often have severe power/weight budgets and this is close to the purest expression of the SFM problem: reasoning has to terminate in a control output within a fixed time window, on hardware that fits in a chassis with a finite battery.</p>
+      <p><strong>Consumer and smart environments.</strong> Sensors that provide heterogeneous data are becoming more prevalent across homes and buildings. Motion sensing, radar, air quality, energy, occupancy, acoustic, and imaging, all reporting asynchronously. Each needs decisions made locally for latency, privacy, and reliability reasons rather than round-tripped to the cloud.</p>
+      <p><strong>Space and remote or off-grid systems.</strong> Satellites and remote infrastructure have a varied amount of power and computational budget, but in some cases face even stricter decision-making constraints than drones or autonomous vehicles.</p>
+      <p><strong>Healthcare and wearables.</strong> Continuous physiological monitoring is asynchronous by nature. Heart rate, accelerometer, and sleep-stage data are all inherently asynchronous and the cost of a missed or delayed inference could result in a negative patient outcome, not just a negative user satisfaction score.</p>
+      <p>I don't expect one model to run unmodified across a drone, a satellite, and a thermostat. The go-to-market and regulatory environment for each is completely different. What I do expect to carry across all of them is the architecture itself: being multimodal native, doing asynchronous data fusion, reasoning and acting in real time, and running local first. That's the same pattern that let "predict the next token" turn into a shared primitive underneath translation, summarisation, and code generation. Whoever builds the best general solution to that shared primitive has a foundation model business, not four separate ones.</p>
+      <h2>Why Now</h2>
+      <p>I think three trends that were each individually true, but not yet convergent, have come together only in the last couple of years, and it's their convergence that makes SFMs buildable now rather than a research curiosity for the 2030s. I say 2030’s here for dramatic effect, not because I think it would have taken us this long to get there. Time has been a fickle thing in the AI space, and it has been very hard to estimate when the next big jump will come. AGI was meant to arrive by the end of 2026, and as I write this, we are only 4 months away from that target date.</p>
+      <p>The scale of the underlying trend I believe is already visible in the numbers. Estimates put the number of connected IoT devices at roughly 21 billion, with forecasts of more than 40 billion by the mid-2030s as sensors proliferate across buildings, vehicles, and industrial equipment.<sup class="ref"><a href="#ref3">3</a></sup> Independent market analyses point toward steep growth in edge AI, TinyML, and smart-building software over the next decade. The specific figures vary by methodology and should be treated as directional rather than precise, but every major estimate points the same way: more sensors, more edge compute, and a widening gap between the data being generated and the AI capable of using it in real time.</p>
+      <p><strong>Edge silicon crossed a threshold.</strong> Neural accelerators are now common in mid-range microcontrollers and SoCs, at power and cost points that make on-device inference viable for consumer-scale hardware rather than only defence and aerospace budgets. This being said, we are currently in the “RAM-pocalypse” which has made the price skyrocket for many important IC’s and anything that is used in the AI space.</p>
+      <p><strong>Sensors got radically cheaper and denser.</strong> The cost of instrumenting a physical environment with a dozen heterogeneous sensors has fallen enough that "sensor-rich by default" is now a viable product decision for consumer hardware, not just industrial equipment. That means the training data SFMs need is finally being generated at scale, by devices already being deployed for other reasons.</p>
+      <p><strong>Neuro-symbolic and hybrid architectures are becoming credible.</strong> Pure end-to-end deep learning struggles with the safety guarantees and sample efficiency the physical world demands; growing use of approaches that combine learned representations with symbolic constraints and verifiable rules is giving SFMs a more credible path to real-time reasoning that a regulator, an insurer, or a safety engineer could plausibly sign off on.</p>
+      <p>On their own, none of these three would be enough. Cheap sensors without enough edge silicon just produce data that nothing can act on locally. Edge silicon without better reasoning methods produces fast models that are still black boxes in domains that can't tolerate one. It's the combination of all three, arriving together, that's opened the window.</p>
+      <h2>What This Means for Builders and Investors</h2>
+      <p>For engineers, I think this means the future is closer than it was before. Systems can "think" in real time and then act, based on real-world data. This is where reality starts to meet sci-fi.</p>
+      <p>For investors, I think the more interesting question is where value accrues once the category exists. My answer isn't "wherever the most parameters are" which did become a trend on the initial AI race. I believe there are four plays worth watching.</p>
+      <ul>
+      <li><p><strong>The model layer.</strong> Whoever trains the best general-purpose SFM backbone, and makes it easy to adapt across domains, occupies a position analogous to the foundation model labs in language and vision. This will be a valuable, but contestable, and likely to compress in margin over time as the technique becomes known. However, a first move advantage might hold out and could present a very valuable opportunity.</p></li>
+      <li><p><strong>The silicon layer.</strong> Edge accelerators purpose-built for asynchronous, sparse, low-power inference are a deep hardware moat, but hardware cycles are slow and capital-intensive. I'd expect the winners here to be incumbents who already have a fabrication and distribution advantage.</p></li>
+      <li><p><strong>The data layer.</strong> The fairly durable position, I think, is a company that's already deploying dense, heterogeneous sensor hardware into real physical environments at scale, for a business reason independent of SFM (energy savings, safety, automation), and accumulating exactly the messy, asynchronous, real-world data that SFM training requires. Cloud-scale text and image data is now largely spoken for; real-world multimodal sensor data at scale is not, yet. Every device shipped today is a data-generation asset for whoever owns the fleet.</p></li>
+      <li><p><strong>The full stack layer.</strong> For me, this is the most interesting position. A company that not only trains the model, but also can utilise it in the real world, rather than just licencing it. That way the company can train the model on its own sensor data, whilst generating multiple revenue streams, all whilst having a very strong defensible moat. This is of course the hardest option, but it is the option with the highest upside.</p></li>
+      </ul>
+      <p>I expect the category to follow the same arc as language foundation models: an initial period where general-purpose backbones get most of the attention, followed by a longer period where the durable value shifts toward whoever controls proprietary deployment data and the distribution to keep collecting it. I'd weight that second phase more heavily than the current headlines tend to.</p>
+      <p>If SFM is going to be a real category and not just an idea, it needs the building blocks every new foundation model category has required before it. These are: shared benchmarks that actually measure asynchronous, heterogeneous, power-constrained performance rather than repurposed vision or NLP benchmarks; open reference architectures that make the four pillars above concrete rather than aspirational; and a common vocabulary, so that "sensor AI," "edge AI," and "SFM" stop being used interchangeably for very different levels of ambition. That's the gap between "edge AI" as it's mostly practiced today (compressed, single-modality classifiers) and SFMs as I've defined it here. Closing it is a multi-year systems and research problem, not a fine-tuning exercise, and I think it'll be won by teams that treat real-world deployment as the primary source of training signal, not a downstream afterthought to a model trained on public benchmarks.</p>
+      <p>The physical world produces more data, more continuously, than the text and image datasets that built today's foundation models, and only a very small amount of it is being used to train new models, because the tools built for language and vision models don’t currently support it as well as they could. SFMs is what it could look like to take the foundation model recipe seriously for the data the world actually generates: asynchronous, heterogeneous, real-time, and power-constrained. The technology to build them is ready. The category doesn't have a name yet that's stuck. SFM(s) is my proposal for one.</p>
+      </div>
+
+      <p class="article-citation"><em>If you'd like to cite this: Dixon, R. (2026). <strong>Sensor Foundational Models (SFMs): The Missing Layer Between AI and the Physical World. </strong></em></p>
+
+      <section class="article-references">
+        <h2>References</h2>
+        <ol>
+        <li id="ref1">“Exploring Capabilities of Time Series Foundation Models in Building Analytics” (published at the ACM International Conference on Systems for Energy-Efficient Buildings, Cities, and Transportation). <a href="https://arxiv.org/html/2411.08888v1">https://arxiv.org/html/2411.08888v1</a></li>
+        <li id="ref2">For the wider academic context on foundation models for sensor and time-series data: “Foundation Models for CPS-IoT: Opportunities and Challenges” (<a href="https://arxiv.org/html/2501.16368v2">https://arxiv.org/html/2501.16368v2</a>); “Foundation Models for Time Series: A Survey” (<a href="https://arxiv.org/abs/2504.04011">https://arxiv.org/abs/2504.04011</a>); “Empowering Time Series Analysis with Foundation Models: A Comprehensive Survey” (<a href="https://arxiv.org/abs/2405.02358">https://arxiv.org/abs/2405.02358</a>); “Speech Foundation Models Generalize to Time Series Tasks from Wearable Sensor Data” (<a href="https://arxiv.org/html/2509.00221v2">https://arxiv.org/html/2509.00221v2</a>).</li>
+        <li id="ref3">IoT Analytics, “Number of connected IoT devices growing 14% to 21.1 billion,” <a href="https://iot-analytics.com/number-connected-iot-devices/">https://iot-analytics.com/number-connected-iot-devices/</a>; Transforma Insights, “Global IoT connections forecast to rise above 40 billion in 2034,” <a href="https://transformainsights.com/news/global-iot-connections-forecast-above-40-billion-2034">https://transformainsights.com/news/global-iot-connections-forecast-above-40-billion-2034</a></li>
+        </ol>
+      </section>
+    </article>
+  </div>
+
+  <footer>
+    <div class="copy">&copy; 2026 by Rowan Dixon</div>
+    <div class="socials">
+      <a href="https://www.linkedin.com/in/rowan-dixon/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="#" target="_blank" rel="noopener">Thingiverse</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var root = document.documentElement;
+  var btn = document.getElementById('theme-toggle');
+  function isDark(){ return root.getAttribute('data-theme') === 'dark'; }
+  function sync(){
+    btn.setAttribute('aria-pressed', isDark() ? 'true' : 'false');
+    btn.setAttribute('aria-label', isDark() ? 'Switch to light reading mode' : 'Switch to dark reading mode');
+  }
+  sync();
+  btn.addEventListener('click', function(){
+    if (isDark()) {
+      root.removeAttribute('data-theme');
+    } else {
+      root.setAttribute('data-theme', 'dark');
+    }
+    try { localStorage.setItem('sfm-theme', isDark() ? 'dark' : 'light'); } catch (e) {}
+    sync();
+  });
+})();
+</script>
+</body>
+</html>
